@@ -104,12 +104,21 @@
           <property name="text">
            <string>Зашифровать</string>
           </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QRadioButton" name="radioButton_6">
           <property name="text">
            <string>Дешифровать</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

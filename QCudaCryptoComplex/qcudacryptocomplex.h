@@ -19,11 +19,12 @@ public slots:
 	void on_pushButton_2_clicked();
 	void on_pushButton_3_clicked();
 	void on_pushButton_4_clicked();
+	void on_radioButton_6_clicked();
+	void on_radioButton_7_clicked();
 
 private:
 	Ui::QCudaCryptoComplexClass ui;
-	QString fileName;
-	QString keyFileName;
+	bool mode;
 };
 
 #endif // QCUDACRYPTOCOMPLEX_H
