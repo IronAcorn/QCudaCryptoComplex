@@ -1,0 +1,56 @@
+﻿Build started 07.02.2014 16:49:52.
+     1>Project "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\QCudaCryptoComplex.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\QCudaCryptoComplex.lastbuildstate".
+       CudaClean:
+         cmd.exe /C "C:\Users\164981\AppData\Local\Temp\tmpf0e250b4d45f4640b3f3f5670253a26e.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile   -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" -clean
+         
+         C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile   -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" -clean 
+         Deleting file "Debug\kernel.cu.deps".
+       InitializeBuildStatus:
+         Creating "Debug\QCudaCryptoComplex.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       CustomBuild:
+         Moc'ing qcudacryptocomplex.h...
+         Uic'ing qcudacryptocomplex.ui...
+         Moc'ing runthread.h...
+         Rcc'ing qcudacryptocomplex.qrc...
+     1>RCC : warning : No resources in 'C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\qcudacryptocomplex.qrc'.
+         
+       AddCudaCompileDeps:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /DUNICODE /DWIN32 /DWIN64 /DQT_DLL /DQT_CORE_LIB /DQT_GUI_LIB /DQT_WIDGETS_LIB /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /I. /FIcuda_runtime.h /c "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" 
+       CudaBuild:
+         Compiling CUDA source file kernel.cu...
+         cmd.exe /C "C:\Users\164981\AppData\Local\Temp\tmp8b65b56b61b442b688e7b10635bef734.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -gencode=arch=compute_10,code=\"sm_10,compute_10\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu"
+         
+         C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -gencode=arch=compute_10,code=\"sm_10,compute_10\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" 
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\Debug\moc_qcudacryptocomplex.cpp GeneratedFiles\Debug\moc_runthread.cpp main.cpp qcudacryptocomplex.cpp runthread.cpp
+         moc_qcudacryptocomplex.cpp
+         moc_runthread.cpp
+         main.cpp
+         qcudacryptocomplex.cpp
+         runthread.cpp
+         Generating Code...
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\qrc_qcudacryptocomplex.cpp
+         qrc_qcudacryptocomplex.cpp
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\Win32\Debug\\QCudaCryptoComplex.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\lib /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\lib\Win32" qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib cudart.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\QCudaCryptoComplex.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\Win32\Debug\QCudaCryptoComplex.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\Win32\Debug\QCudaCryptoComplex.lib" /MACHINE:X86 Debug\kernel.cu.obj
+         Debug\moc_qcudacryptocomplex.obj
+         Debug\moc_runthread.obj
+         Debug\qrc_qcudacryptocomplex.obj
+         Debug\main.obj
+         Debug\qcudacryptocomplex.obj
+         Debug\runthread.obj
+         QCudaCryptoComplex.vcxproj -> C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\Win32\Debug\QCudaCryptoComplex.exe
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\Win32\Debug\\QCudaCryptoComplex.exe;#1" /manifest Debug\QCudaCryptoComplex.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\QCudaCryptoComplex.unsuccessfulbuild".
+         Touching "Debug\QCudaCryptoComplex.lastbuildstate".
+     1>Done Building Project "C:\Users\164981\documents\visual studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\QCudaCryptoComplex.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:15.55
