@@ -156,11 +156,14 @@ public:
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         radioButton_7 = new QRadioButton(centralWidget);
         radioButton_7->setObjectName(QStringLiteral("radioButton_7"));
+        radioButton_7->setCheckable(true);
+        radioButton_7->setChecked(false);
 
         horizontalLayout_4->addWidget(radioButton_7);
 
         radioButton_6 = new QRadioButton(centralWidget);
         radioButton_6->setObjectName(QStringLiteral("radioButton_6"));
+        radioButton_6->setCheckable(true);
 
         horizontalLayout_4->addWidget(radioButton_6);
 
