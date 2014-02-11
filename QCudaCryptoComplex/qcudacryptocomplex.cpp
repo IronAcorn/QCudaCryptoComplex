@@ -40,10 +40,16 @@ void QCudaCryptoComplex::on_pushButton_3_clicked()
 void QCudaCryptoComplex::on_pushButton_4_clicked()
 {
 	if(ui.radioButton_2->isChecked()) {
-	    RunThread *thread= new RunThread(ui.lineEdit->text().toStdString(), ui.lineEdit_2->text().toStdString(), mode);
+	    RunThread *thread= new RunThread(ui.lineEdit->text().toStdString(), ui.lineEdit_2->text().toStdString(), mode, 1);
 	    thread->start();
 	    QObject::connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 	}
+	if(ui.radioButton->isChecked()) {
+	    RunThread *thread= new RunThread(ui.lineEdit->text().toStdString(), ui.lineEdit_2->text().toStdString(), mode, 2);
+	    thread->start();
+	    QObject::connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+	}
+
 }
 
 void QCudaCryptoComplex::on_radioButton_6_clicked()
