@@ -1,9 +1,9 @@
-﻿Build started 12.02.2014 2:16:18.
+﻿Build started 13.02.2014 23:19:59.
      1>Project "C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\QCudaCryptoComplex.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\QCudaCryptoComplex.lastbuildstate".
        CudaClean:
-         cmd.exe /C "C:\Users\164981\AppData\Local\Temp\tmpef59581e3b314a1b83444cc5780f4e1e.cmd"
+         cmd.exe /C "C:\Users\164981\AppData\Local\Temp\tmp75737a8e657d418db7216c07279d49bd.cmd"
          "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile   -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" -clean
          
          C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile   -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" -clean 
@@ -21,21 +21,17 @@
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /DUNICODE /DWIN32 /DWIN64 /DQT_DLL /DQT_CORE_LIB /DQT_GUI_LIB /DQT_WIDGETS_LIB /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /I. /FIcuda_runtime.h /c "C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" 
        CudaBuild:
          Compiling CUDA source file kernel.cu...
-         cmd.exe /C "C:\Users\164981\AppData\Local\Temp\tmp976ab32b31e8417f85fb45a3edeb465a.cmd"
+         cmd.exe /C "C:\Users\164981\AppData\Local\Temp\tmp97cc439a3ae046b4a18c9eda3160f71c.cmd"
          "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -gencode=arch=compute_10,code=\"sm_10,compute_10\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu"
          
          C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin\nvcc.exe" -gencode=arch=compute_10,code=\"sm_10,compute_10\" --use-local-env --cl-version 2010 -ccbin "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I.\GeneratedFiles -I. -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include -I.\GeneratedFiles\Debug -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui -IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -Xcompiler "/EHsc /W1 /nologo /Od /Zi  /MDd  " -o Debug\kernel.cu.obj "C:\Users\164981\Documents\Visual Studio 2010\Projects\QCudaCryptoComplex\QCudaCryptoComplex\kernel.cu" 
-     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(243): warning : missing return statement at end of non-void function "multiply"
+     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(238): warning : missing return statement at end of non-void function "multiply"
          
-     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(275): warning : variable "buf2" was declared but never referenced
+     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(270): warning : variable "buf2" was declared but never referenced
          
-     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(383): warning : variable "iKey" was declared but never referenced
+     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(238): warning : missing return statement at end of non-void function "multiply"
          
-     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(243): warning : missing return statement at end of non-void function "multiply"
-         
-     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(275): warning : variable "buf2" was declared but never referenced
-         
-     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(383): warning : variable "iKey" was declared but never referenced
+     1>C:/Users/164981/Documents/Visual Studio 2010/Projects/QCudaCryptoComplex/QCudaCryptoComplex/kernel.cu(270): warning : variable "buf2" was declared but never referenced
          
        ClCompile:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtCore /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2010_opengl\include\QtWidgets /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\include" /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\Debug\moc_qcudacryptocomplex.cpp GeneratedFiles\Debug\moc_runthread.cpp main.cpp qcudacryptocomplex.cpp runthread.cpp
@@ -65,4 +61,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:20.08
+Time Elapsed 00:00:15.93

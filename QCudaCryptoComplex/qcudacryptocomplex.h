@@ -4,6 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_qcudacryptocomplex.h"
 #include <qstring.h>
+#include <qevent.h>
 #include <string>
 using namespace std;
 
@@ -21,6 +22,7 @@ public slots:
 	void on_pushButton_4_clicked();
 	void on_radioButton_6_clicked();
 	void on_radioButton_7_clicked();
+	void showType(bool);
 
 private:
 	Ui::QCudaCryptoComplexClass ui;

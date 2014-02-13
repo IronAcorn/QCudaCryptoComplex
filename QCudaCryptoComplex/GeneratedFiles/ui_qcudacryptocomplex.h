@@ -35,6 +35,10 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout_2;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
+    QRadioButton *radioButton_10;
+    QRadioButton *radioButton_9;
+    QRadioButton *radioButton_8;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
@@ -73,6 +77,27 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        radioButton_10 = new QRadioButton(centralWidget);
+        radioButton_10->setObjectName(QStringLiteral("radioButton_10"));
+
+        horizontalLayout_2->addWidget(radioButton_10);
+
+        radioButton_9 = new QRadioButton(centralWidget);
+        radioButton_9->setObjectName(QStringLiteral("radioButton_9"));
+
+        horizontalLayout_2->addWidget(radioButton_9);
+
+        radioButton_8 = new QRadioButton(centralWidget);
+        radioButton_8->setObjectName(QStringLiteral("radioButton_8"));
+
+        horizontalLayout_2->addWidget(radioButton_8);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
+
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         verticalLayout_3 = new QVBoxLayout(groupBox);
@@ -203,6 +228,9 @@ public:
     void retranslateUi(QMainWindow *QCudaCryptoComplexClass)
     {
         QCudaCryptoComplexClass->setWindowTitle(QApplication::translate("QCudaCryptoComplexClass", "QCudaCryptoComplex", 0));
+        radioButton_10->setText(QApplication::translate("QCudaCryptoComplexClass", "128", 0));
+        radioButton_9->setText(QApplication::translate("QCudaCryptoComplexClass", "192", 0));
+        radioButton_8->setText(QApplication::translate("QCudaCryptoComplexClass", "256", 0));
         groupBox->setTitle(QApplication::translate("QCudaCryptoComplexClass", "\320\220\320\273\320\263\320\276\321\200\320\270\321\202\320\274", 0));
         radioButton_2->setText(QApplication::translate("QCudaCryptoComplexClass", "\320\223\320\276\321\201\321\202 28147-89", 0));
         radioButton->setText(QApplication::translate("QCudaCryptoComplexClass", "AES", 0));

@@ -14,7 +14,7 @@ class RunThread : public QThread
 	Q_OBJECT
 
 public:
-	RunThread(string, string, bool, int);
+	RunThread(string, string, bool, int, int);
 	~RunThread();
 	void run();
 
@@ -23,6 +23,7 @@ private:
 	string keyName;
 	bool mode;
 	int algorithm;
+	int length;
 	
 };
 
