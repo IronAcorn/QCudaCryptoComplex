@@ -21,8 +21,11 @@ void RunThread::run()
 	switch(algorithm) {
 	case 1: launch_gost(fileName, keyName, mode);
 		break;
-	case 2: launch_aes(fileName, keyName, mode, length);
+	case 2: 
+		launch_aes(fileName, keyName, mode, length);
 		break;
 	}
 	cout<<"Thread Finish\n";
 }
+
+

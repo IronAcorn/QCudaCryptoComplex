@@ -17,14 +17,12 @@ public:
 	RunThread(string, string, bool, int, int);
 	~RunThread();
 	void run();
-
 private:
 	string fileName;
 	string keyName;
 	bool mode;
 	int algorithm;
 	int length;
-	
 };
 
 #endif // RUNTHREAD_H

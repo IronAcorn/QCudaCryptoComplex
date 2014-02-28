@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-#define SIZE 1280
+#define SIZE 13107200
 
 __constant__ unsigned int gKey[8];
 __constant__ short int gTable[8][16];
@@ -121,12 +121,20 @@ void createTable()
 
  extern "C" void launch_gost(string fName, string kName, bool mode) 
  {
+	 unsigned int key[8];
+	 FILE *iKey;
+	 FILE *iFile;
+	 FILE *oFile;
+	 unsigned long long *buf = new unsigned long long [SIZE];
+	 unsigned long long *data = new unsigned long long [SIZE];
+	 unsigned long long *gResult;
+	 unsigned long long *gData;
+	 int count = 0;
 	 cout<<"Run gost algorithm\n";
 	 cout<<"File name: "<<fName<<endl;
 	 cout<<"Key name: "<<kName<<endl;
-	 unsigned int key[8];
+	 cout<<"Mode: "<<mode<<endl;
 	 //read key
-	 FILE *iKey;
 	 iKey = fopen(kName.c_str(), "rb");
 	 fread(&key[0], sizeof(key[0]), 8, iKey);
 	 fclose(iKey);
@@ -136,12 +144,6 @@ void createTable()
 		 cout<<key[i]<<" ";
 	 cout<<endl;
 	 //read data and run crypt algorithm
-	 FILE *iFile;
-	 FILE *oFile;
-	 unsigned long long data[SIZE];
-	 unsigned long long result[SIZE];
-	 unsigned long long *gResult;
-	 unsigned long long *gData;
 	 cudaMemcpyToSymbol(gKey, key , sizeof(unsigned int) * 8, 0, cudaMemcpyHostToDevice);
 	 createTable();
 	 iFile = fopen(fName.c_str(),"rb");
@@ -153,29 +155,31 @@ void createTable()
 	 oFile = fopen((fName).c_str(),"wb");
 	 cudaMalloc((void **) &gResult, sizeof(unsigned long long) * SIZE);
 	 cudaMalloc((void **) &gData, sizeof(unsigned long long) * SIZE);
-	 int count = 0;
-	 while(count = fread(&data[0], sizeof(data[0]), SIZE, iFile)) {
-     cudaMemcpy(gData, data, sizeof(unsigned long long) * count, cudaMemcpyHostToDevice);
-	 if(mode)
-	     gostEncrypt<<<dim3(10, 1, 1),dim3(count / 10, 1, 1)>>>(gData, gResult);
-	 else
-	     gostDeciphered<<<dim3(10, 1, 1),dim3(count / 10, 1, 1)>>>(gData, gResult);
-	 cudaEvent_t syncEvent;
-     cudaEventCreate(&syncEvent);    //Создаем event
-     cudaEventRecord(syncEvent, 0);  //Записываем event
-     cudaEventSynchronize(syncEvent);  //Синхронизируем event
-     cudaMemcpy((void *) &result, gResult, count * sizeof(unsigned long long), cudaMemcpyDeviceToHost);
-	 fwrite(&result[0], sizeof(result[0]), count, oFile);
+	 while(count = fread(&buf[0], sizeof(buf[0]), SIZE, iFile)) {
+         cudaMemcpy(gData, &buf[0], sizeof(unsigned long long) * count, cudaMemcpyHostToDevice);
+	     if(mode)
+	         gostEncrypt<<<dim3(1000, 1, 1),dim3(512, 1, 1)>>>(gData, gResult);
+	     else
+	         gostDeciphered<<<dim3(1000, 1, 1),dim3(512, 1, 1)>>>(gData, gResult);
+		 //sync
+	     cudaEvent_t syncEvent;
+         cudaEventCreate(&syncEvent);    
+         cudaEventRecord(syncEvent, 0);  
+         cudaEventSynchronize(syncEvent);  
+         cudaMemcpy(&data[0], gResult, count * sizeof(unsigned long long), cudaMemcpyDeviceToHost);
+	     fwrite(&data[0], sizeof(data[0]), count, oFile);
      }
 	 cudaFree(gResult);
 	 cudaFree(gData);
+	 delete[] buf;
+	 delete[] data;
 	 fclose(iFile);
 	 fclose(oFile);
 	 cout<<"Finish\n";
- }
+ } 
 
  /*-----------------------------------------------------------AES-----------------------------------------------------------------------*/
- 
+
  __constant__ unsigned char gSubTable[256];
  __constant__ unsigned char gAesKey[32];
  __constant__ unsigned int gWords[60];
@@ -188,7 +192,7 @@ __device__ void subBytes(node *data)
 {
 	for(int i = 0; i < 4; i ++)
 		for(int j = 0; j < 4; j ++)
-			data->dta[i][j] = gSubTable[data->dta[i][j]];
+			data->dta[j][i] = gSubTable[data->dta[j][i]];
 }
 
 __device__ void shiftRows(node *data) 
@@ -196,11 +200,11 @@ __device__ void shiftRows(node *data)
 	unsigned char buf;
 	for(int i = 0; i < 4; i ++) {
 			for(int k = 0; k < i; k ++) {
-				buf = data->dta[i][0];
-				data->dta[i][0] = data->dta[i][1];
-				data->dta[i][1] = data->dta[i][2];
-				data->dta[i][2] = data->dta[i][3];
-				data->dta[i][3] = buf;
+				buf = data->dta[0][i];
+				data->dta[0][i] = data->dta[1][i];
+				data->dta[1][i] = data->dta[2][i];
+				data->dta[2][i] = data->dta[3][i];
+				data->dta[3][i] = buf;
 			}
 	}
 }
@@ -247,14 +251,14 @@ __device__ void mixColumns(node *data)
 	for(int k = 0; k < 4; k ++) {
 	    for(int i = 0; i < 4; i ++) {
 		    for(int j = 0; j < 4; j ++) {
-			    r[i][k] ^= multiply(b[i][j], data->dta[j][k]);
+			    r[i][k] ^= multiply(b[i][j], data->dta[k][j]);
 		    }
 	    }
 	}
 
 	for(int i = 0; i < 4; i ++)
 		for(int j = 0; j < 4; j ++)
-			data->dta[i][j] = r[i][j];
+			data->dta[j][i] = r[i][j];
 
 }
 
@@ -263,12 +267,11 @@ __device__ void addRoundKey(node *data, int r)
 	for(int j = 0; j < 4; j ++) {
 		unsigned int buf = 0;
 		for(int i = 3; i >= 0; i --) {
-			buf += (data->dta[i][j] << 8 * i);
+			buf += (data->dta[j][i] << 8 * i);
 		}
 		buf ^= gWords[4*r + j];
 		for(int i = 0; i < 4; i ++) {
-			unsigned char buf2 = buf & 0xFF;
-			data->dta[i][j] = buf & 0xFF;
+			data->dta[j][i] = buf & 0xFF;
 			buf >>= 8;
 		}
 	}
@@ -295,11 +298,11 @@ __device__ void invShiftRows(node * data)
 	unsigned char buf;
 	for(int i = 0; i < 4; i ++) {
 			for(int k = 0; k < i; k ++) {
-				buf = data->dta[i][3];
-				data->dta[i][3] = data->dta[i][2];
-				data->dta[i][2] = data->dta[i][1];
-				data->dta[i][1] = data->dta[i][0];
-				data->dta[i][0] = buf;
+				buf = data->dta[3][i];
+				data->dta[3][i] = data->dta[2][i];
+				data->dta[2][i] = data->dta[1][i];
+				data->dta[1][i] = data->dta[0][i];
+				data->dta[0][i] = buf;
 			}
 	}
 }
@@ -333,14 +336,14 @@ __device__ void invMixColumns(node *data)
 	for(int k = 0; k < 4; k ++) {
 	    for(int i = 0; i < 4; i ++) {
 		    for(int j = 0; j < 4; j ++) {
-			    r[i][k] ^= invMultiply(b[i][j], data->dta[j][k]);
+			    r[i][k] ^= invMultiply(b[i][j], data->dta[k][j]);
 		    }
 	    }
 	}
 
 	for(int i = 0; i < 4; i ++)
 		for(int j = 0; j < 4; j ++)
-			data->dta[i][j] = r[i][j];
+			data->dta[j][i] = r[i][j];
 }
 
  __global__ void aesDeciphered(node *data, node *result, int rounds)
@@ -378,8 +381,6 @@ __device__ void invMixColumns(node *data)
      0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 
      0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 
      0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d};
-	 //unsigned int pos = 0;
-	 //pos += ((unsigned int) pow(2.0f, n - 1) % 256);
 	 return rCon[n];
  }
 
@@ -403,6 +404,20 @@ __device__ void invMixColumns(node *data)
 	 buf <<= 24;
 	 n += buf;
 	 return n;
+ }
+
+ int rounds(int keySize)
+ {
+    switch(keySize) {
+	    case 128: 
+			return 10;
+		case 192:
+			return 12;
+		case 256:
+			return 14;
+		default:
+			return -1;
+	}
  }
 
  void createWordsAndTable(unsigned char *key, int keySize, bool mode) 
@@ -443,35 +458,26 @@ __device__ void invMixColumns(node *data)
         0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61,
         0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d
         };
-	if(mode)
+    if(mode)
 	    cudaMemcpyToSymbol(gSubTable, table, sizeof(table), 0, cudaMemcpyHostToDevice);
 	else
 		cudaMemcpyToSymbol(gSubTable, table2, sizeof(table2), 0, cudaMemcpyHostToDevice);
-    unsigned int r = 0;
+    unsigned int r = rounds(keySize);
 	int nK = keySize / 32;
-	switch(keySize) {
-		case 128: r = 10;
-			break;
-		case 192: r = 12;
-			break;
-		case 256: r = 14;
-			break;
-	 }
-	 unsigned int *words = new unsigned int[4 * (r + 1)];
-	 for(int i = 0; i < 4 * (r + 1); i ++)
-		 words[i] = 0;
-	 for(int i = 0; i < nK; i ++) {
-		 for(int j = 0; j < 4; j ++) 
-			 words[i] += ((key[4 * i + j]) << (8 * j));
-		 //cout<<"words["<<i<<"]="<<words[i]<<endl;
-	 }
-	 for(int i = nK; i < 4 * (r + 1); i ++) {
-		 unsigned int t = words[i - 1];
-		 if(i % nK == 0) 
-			 t = subWord(table, rotWord(t)) ^ rc(i/nK);
-		 if((nK == 8) && (i % nK == 4))
-			 t = subWord(table, t);
-		 words[i] = (unsigned int) words[i - nK] ^ t;
+	unsigned int *words = new unsigned int[4 * (r + 1)];
+	for(int i = 0; i < 4 * (r + 1); i ++)
+		words[i] = 0;
+	for(int i = 0; i < nK; i ++) {
+		for(int j = 0; j < 4; j ++) 
+			words[i] += ((key[4 * i + j]) << (8 * j));
+	}
+	for(int i = nK; i < 4 * (r + 1); i ++) {
+		unsigned int t = words[i - 1];
+		if(i % nK == 0) 
+			t = subWord(table, rotWord(t)) ^ rc(i/nK);
+		if((nK == 8) && (i % nK == 4))
+			t = subWord(table, t);
+		words[i] = (unsigned int) words[i - nK] ^ t;
 	 }
 	 cudaMemcpyToSymbol(gWords, words, sizeof(unsigned int) * (4 * (r + 1)), 0, cudaMemcpyHostToDevice);
  }
@@ -480,29 +486,22 @@ __device__ void invMixColumns(node *data)
 
  extern "C" void launch_aes(string fName, string kName, bool mode, int keySize) 
  {
-	 cout<<fName<<" "<<kName<<" "<<mode<<" "<<keySize<<endl;
-	 int r = 0;
-	 switch(keySize) {
-		case 128: r = 10;
-			break;
-		case 192: r = 12;
-			break;
-		case 256: r = 14;
-			break;
-	 }
 	 FILE *iKey;
+	 FILE *iFile;
+	 FILE *oFile;
 	 unsigned char key[32];
+	 int r = rounds(keySize);
+	 struct::node *buf = new node[SIZE];
+	 struct::node *data = new node[SIZE];
+	 struct::node *gData;
+	 struct::node *gResult;
+	 int count = 0;
+	 cout<<fName<<" "<<kName<<" "<<mode<<" "<<keySize<<endl;
 	 //read key
 	 iKey = fopen(kName.c_str(), "rb");
 	 fread(key, sizeof(unsigned char), keySize / 4, iKey);
 	 fclose(iKey);
 	 cudaMemcpyToSymbol(gAesKey, key, keySize / 4, 0,cudaMemcpyHostToDevice);
-	 FILE *iFile, *oFile;
-	 struct::node buf[SIZE];
-	 struct::node data[SIZE];
-	 struct::node result[SIZE];
-	 struct::node *gData;
-	 struct::node *gResult;
 	 iFile = fopen(fName.c_str(), "rb");
 	 int pos = fName.find_last_of("/\\");
 	 if(mode) {
@@ -514,32 +513,26 @@ __device__ void invMixColumns(node *data)
 		 createWordsAndTable(key, keySize, false);
 	 }
 	 oFile = fopen(fName.c_str(), "wb");
-	 int count = 0;
 	 cudaMalloc((void **) &gData, sizeof(node) * SIZE);
 	 cudaMalloc((void **) &gResult, sizeof(node) *SIZE);
 	 while(count = fread(buf, sizeof(buf[0]), SIZE, iFile)) {
-		 for(int n = 0; n < count; n ++)
-			 for(int i = 0; i < 4; i ++)
-				 for(int j = 0; j < 4; j ++)
-					 data[n].dta[j][i] = buf[n].dta[i][j];
-		 cudaMemcpy(gData, data, sizeof(data[0]) * count, cudaMemcpyHostToDevice);
+		 cudaMemcpy(gData, &buf[0], sizeof(buf[0]) * count, cudaMemcpyHostToDevice);
 		 if(mode)
-			 aesEncrypt<<<dim3(10, 1 ,1), dim3(count/10, 1, 1)>>>(gData, gResult, r);
+			 aesEncrypt<<<dim3(1000, 1, 1), dim3(512, 1, 1)>>>(gData, gResult, r);
 		 else
-			 aesDeciphered<<<dim3(10, 1 ,1), dim3(count/10, 1, 1)>>>(gData, gResult, r);
+			 aesDeciphered<<<dim3(1000, 1, 1), dim3(512, 1, 1)>>>(gData, gResult, r);
 		 //synchronize
 		 cudaEvent_t syncEvent;
 		 cudaEventCreate(&syncEvent);
 		 cudaEventRecord(syncEvent, 0);
 		 cudaEventSynchronize(syncEvent);
-		 cudaMemcpy(result, gResult, sizeof(result[0]) * count, cudaMemcpyDeviceToHost);
-		 for(int n = 0; n < count; n ++)
-			 for(int j = 0; j < 4; j ++)
-				 for(int i = 0; i < 4; i ++)
-					 fwrite(&result[n].dta[i][j], sizeof(result[0].dta[0][0]), 1, oFile);
+		 cudaMemcpy(data, gResult, sizeof(data[0]) * count, cudaMemcpyDeviceToHost);
+		 fwrite(data, sizeof(data[0]), count, oFile);
 	 }
 	 cudaFree(gData);
 	 cudaFree(gResult);
+	 delete[] buf;
+	 delete[] data;
 	 fclose(iFile);
 	 fclose(oFile);
 	 cout<<"Finish\n";

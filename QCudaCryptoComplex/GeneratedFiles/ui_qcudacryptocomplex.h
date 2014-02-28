@@ -17,6 +17,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -54,6 +55,7 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QPushButton *pushButton_3;
     QLineEdit *lineEdit_2;
+    QLCDNumber *lcdNumber;
     QHBoxLayout *horizontalLayout_4;
     QRadioButton *radioButton_7;
     QRadioButton *radioButton_6;
@@ -172,6 +174,12 @@ public:
 
 
         verticalLayout_3->addLayout(verticalLayout_4);
+
+        lcdNumber = new QLCDNumber(groupBox);
+        lcdNumber->setObjectName(QStringLiteral("lcdNumber"));
+        lcdNumber->setMaximumSize(QSize(100, 70));
+
+        verticalLayout_3->addWidget(lcdNumber);
 
 
         verticalLayout->addWidget(groupBox);
