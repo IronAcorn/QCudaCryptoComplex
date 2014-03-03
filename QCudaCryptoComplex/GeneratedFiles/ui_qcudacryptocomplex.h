@@ -69,7 +69,7 @@ public:
     {
         if (QCudaCryptoComplexClass->objectName().isEmpty())
             QCudaCryptoComplexClass->setObjectName(QStringLiteral("QCudaCryptoComplexClass"));
-        QCudaCryptoComplexClass->resize(541, 483);
+        QCudaCryptoComplexClass->resize(451, 417);
         centralWidget = new QWidget(QCudaCryptoComplexClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_2 = new QGridLayout(centralWidget);
@@ -219,7 +219,7 @@ public:
         QCudaCryptoComplexClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QCudaCryptoComplexClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 541, 21));
+        menuBar->setGeometry(QRect(0, 0, 451, 21));
         QCudaCryptoComplexClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(QCudaCryptoComplexClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));

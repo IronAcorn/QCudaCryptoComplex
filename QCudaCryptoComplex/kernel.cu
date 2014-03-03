@@ -28,7 +28,7 @@ __device__ void F(unsigned int *itsR)
 	
 }
 
-__global__ void gostEncrypt(unsigned long long *data, unsigned long long *result) 
+__global__ void gostEncrypt(unsigned long long *data) 
 {
 
 	int index = blockIdx.x * blockDim.x + threadIdx.x;
@@ -60,10 +60,10 @@ __global__ void gostEncrypt(unsigned long long *data, unsigned long long *result
 	}
 	unsigned long long res = (unsigned long long) L << 32;
 	res += R;
-	result[index] = res;
+	data[index] = res;
 }
 
-__global__ void gostDeciphered(unsigned long long *data, unsigned long long *result) 
+__global__ void gostDeciphered(unsigned long long *data) 
 {
 	int index = blockIdx.x * blockDim.x + threadIdx.x;
 	unsigned int L = ((data[index] & 0xFFFFFFFF00000000) >> 32);
@@ -94,7 +94,7 @@ __global__ void gostDeciphered(unsigned long long *data, unsigned long long *res
 	}
 	unsigned long long res = (unsigned long long) L << 32;
 	res += R;
-	result[index] = res;
+	data[index] = res;
 }
 
 void createTable()
@@ -127,7 +127,7 @@ void createTable()
 	 FILE *oFile;
 	 unsigned long long *buf = new unsigned long long [SIZE];
 	 unsigned long long *data = new unsigned long long [SIZE];
-	 unsigned long long *gResult;
+	 //unsigned long long *gResult;
 	 unsigned long long *gData;
 	 int count = 0;
 	 cout<<"Run gost algorithm\n";
@@ -153,23 +153,23 @@ void createTable()
 	 else
 		 fName.insert(pos + 1, "decrypt");
 	 oFile = fopen((fName).c_str(),"wb");
-	 cudaMalloc((void **) &gResult, sizeof(unsigned long long) * SIZE);
+	 //cudaMalloc((void **) &gResult, sizeof(unsigned long long) * SIZE);
 	 cudaMalloc((void **) &gData, sizeof(unsigned long long) * SIZE);
 	 while(count = fread(&buf[0], sizeof(buf[0]), SIZE, iFile)) {
          cudaMemcpy(gData, &buf[0], sizeof(unsigned long long) * count, cudaMemcpyHostToDevice);
 	     if(mode)
-	         gostEncrypt<<<dim3(1000, 1, 1),dim3(512, 1, 1)>>>(gData, gResult);
+	         gostEncrypt<<<dim3(1000, 1, 1),dim3(512, 1, 1)>>>(gData);
 	     else
-	         gostDeciphered<<<dim3(1000, 1, 1),dim3(512, 1, 1)>>>(gData, gResult);
+	         gostDeciphered<<<dim3(1000, 1, 1),dim3(512, 1, 1)>>>(gData);
 		 //sync
 	     cudaEvent_t syncEvent;
          cudaEventCreate(&syncEvent);    
          cudaEventRecord(syncEvent, 0);  
          cudaEventSynchronize(syncEvent);  
-         cudaMemcpy(&data[0], gResult, count * sizeof(unsigned long long), cudaMemcpyDeviceToHost);
+         cudaMemcpy(&data[0], gData, count * sizeof(unsigned long long), cudaMemcpyDeviceToHost);
 	     fwrite(&data[0], sizeof(data[0]), count, oFile);
      }
-	 cudaFree(gResult);
+	 //cudaFree(gResult);
 	 cudaFree(gData);
 	 delete[] buf;
 	 delete[] data;
@@ -279,7 +279,7 @@ __device__ void addRoundKey(node *data, int r)
 }
 
 
- __global__ void aesEncrypt(node *data, node *result, int rounds)
+ __global__ void aesEncrypt(node *data, int rounds)
  {
 	 int index = blockDim.x * blockIdx.x + threadIdx.x;
 	 addRoundKey(&data[index], 0);
@@ -290,7 +290,7 @@ __device__ void addRoundKey(node *data, int r)
 	         mixColumns(&data[index]);
 		 addRoundKey(&data[index], i);
 	 }
-	 result[index] = data[index];
+	 //result[index] = data[index];
  }
 
 __device__ void invShiftRows(node * data)
@@ -346,7 +346,7 @@ __device__ void invMixColumns(node *data)
 			data->dta[j][i] = r[i][j];
 }
 
- __global__ void aesDeciphered(node *data, node *result, int rounds)
+ __global__ void aesDeciphered(node *data, int rounds)
  {
 	 int index = blockDim.x * blockIdx.x + threadIdx.x;
 	 addRoundKey(&data[index], rounds);
@@ -358,7 +358,7 @@ __device__ void invMixColumns(node *data)
 			 invMixColumns(&data[index]);
 		 
 	 }
-	 result[index] = data[index];
+	 //result[index] = data[index];
 
  }
 
@@ -494,7 +494,7 @@ __device__ void invMixColumns(node *data)
 	 struct::node *buf = new node[SIZE];
 	 struct::node *data = new node[SIZE];
 	 struct::node *gData;
-	 struct::node *gResult;
+	 //struct::node *gResult;
 	 int count = 0;
 	 cout<<fName<<" "<<kName<<" "<<mode<<" "<<keySize<<endl;
 	 //read key
@@ -514,23 +514,23 @@ __device__ void invMixColumns(node *data)
 	 }
 	 oFile = fopen(fName.c_str(), "wb");
 	 cudaMalloc((void **) &gData, sizeof(node) * SIZE);
-	 cudaMalloc((void **) &gResult, sizeof(node) *SIZE);
+	 //cudaMalloc((void **) &gResult, sizeof(node) *SIZE);
 	 while(count = fread(buf, sizeof(buf[0]), SIZE, iFile)) {
 		 cudaMemcpy(gData, &buf[0], sizeof(buf[0]) * count, cudaMemcpyHostToDevice);
 		 if(mode)
-			 aesEncrypt<<<dim3(1000, 1, 1), dim3(512, 1, 1)>>>(gData, gResult, r);
+			 aesEncrypt<<<dim3(1000, 1, 1), dim3(512, 1, 1)>>>(gData, r);
 		 else
-			 aesDeciphered<<<dim3(1000, 1, 1), dim3(512, 1, 1)>>>(gData, gResult, r);
+			 aesDeciphered<<<dim3(1000, 1, 1), dim3(512, 1, 1)>>>(gData, r);
 		 //synchronize
 		 cudaEvent_t syncEvent;
 		 cudaEventCreate(&syncEvent);
 		 cudaEventRecord(syncEvent, 0);
 		 cudaEventSynchronize(syncEvent);
-		 cudaMemcpy(data, gResult, sizeof(data[0]) * count, cudaMemcpyDeviceToHost);
+		 cudaMemcpy(data, gData, sizeof(data[0]) * count, cudaMemcpyDeviceToHost);
 		 fwrite(data, sizeof(data[0]), count, oFile);
 	 }
 	 cudaFree(gData);
-	 cudaFree(gResult);
+	 //cudaFree(gResult);
 	 delete[] buf;
 	 delete[] data;
 	 fclose(iFile);
